@@ -26,9 +26,13 @@ func processLogLine(line string) string {
 	var re = regexp.MustCompile(`^\d{13}`)
 	timestampString := re.FindString(line)
 
-	dateString := convertDateFromTimestampString(timestampString)
-
-	resultLine := strings.Replace(line, timestampString, dateString, 1)
+	var resultLine string
+	if timestampString != "" {
+		dateString := convertDateFromTimestampString(timestampString)
+		resultLine = strings.Replace(line, timestampString, dateString, 1)
+	} else {
+		resultLine = line
+	}
 
 	return resultLine + "\n"
 }
